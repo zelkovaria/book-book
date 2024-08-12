@@ -3,3 +3,31 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+#logo {
+  width: 60px;
+}
+
+#heartLogo {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.searchInput {
+  border-radius: 1rem;
+  border: none;
+  box-shadow: 1px 1px 6px 2px rgba(0, 0, 0, 0.1);
+  height: 4rem;
+  width: 36rem;
+  padding: 1.3rem 1rem 1rem 1.3rem;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #eeeeee;
+  height: 7.1rem;
+  position: sticky;
+  padding: 0 7.7rem;
+}
