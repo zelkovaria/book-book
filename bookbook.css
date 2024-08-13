@@ -98,7 +98,8 @@ header {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  position: relative;
+  /* position: relative; */
+  padding-right: 3rem;
 }
 .book-details span {
   display: block;
@@ -107,16 +108,25 @@ header {
 
 .favorite {
   position: absolute;
+  bottom: 4rem;
+  right: 1rem;
   background: none;
   border: none;
   cursor: pointer;
-  position: absolute;
-  bottom: 4rem;
-  right: 1rem;
-  padding: 0;
 }
 
 .favorite img {
   width: 1.5rem;
   height: 1.5rem;
+}
+
+.book-details span {
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.book-details .title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
