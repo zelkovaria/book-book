@@ -73,16 +73,20 @@ header {
   position: relative;
 }
 
-.book-card-back {
+.book-image-back {
   position: absolute;
-  top: 10%;
-  left: 1em;
-  right: 1em;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: none;
-  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 1rem;
+  overflow-y: auto;
 }
 
 .book-image {
+  position: relative;
   height: 200px;
   overflow: hidden;
 }
@@ -90,7 +94,7 @@ header {
 .book-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .book-details {
@@ -98,7 +102,6 @@ header {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  /* position: relative; */
   padding-right: 3rem;
 }
 .book-details span {

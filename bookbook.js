@@ -9,6 +9,9 @@ const createBookInfo = (bookInfo) => {
           <div class="book-image">
             <img src=${bookInfo.cover} alt="Book cover" />
           </div>
+          <div class="book-image-back">
+            <span class="description">${description}</span>
+          </div>
           <div class="book-details">
             <span class="title">${bookInfo.title}</span>
             <span class="price">${bookInfo.priceStandard}원</span>
@@ -19,9 +22,6 @@ const createBookInfo = (bookInfo) => {
           <button class="favorite">
             <img src="/heart.png" alt="Favorite" />
           </button>
-        </div>
-        <div class="book-card-back">
-          <span class="description">${description}</span>
         </div>
       </li>
     `;
@@ -37,18 +37,18 @@ fetch("http://localhost:3000/api/search?query=연금술사")
 
     const $bookItems = document.querySelectorAll(".book-item");
     $bookItems.forEach(($bookItem) => {
-      $bookItem.addEventListener("mouseover", () => {
-        const $bookCardBack = $bookItem.querySelector(".book-card-back");
-        const $bookCard = $bookItem.querySelector(".book-card");
-        $bookCardBack.style.display = "block";
-        $bookCard.style.display = "none";
+      const $bookImage = $bookItem.querySelector(".book-image");
+      const $bookImageBack = $bookItem.querySelector(".book-image-back");
+      const $bookDetails = $bookItem.querySelector(".book-details");
+
+      $bookImage.addEventListener("mouseover", () => {
+        $bookImageBack.style.display = "block";
+        $bookDetails.style.display = "none";
       });
 
-      $bookItem.addEventListener("mouseout", () => {
-        const $bookCardBack = $bookItem.querySelector(".book-card-back");
-        const $bookCard = $bookItem.querySelector(".book-card");
-        $bookCardBack.style.display = "none";
-        $bookCard.style.display = "block";
+      $bookImage.addEventListener("mouseout", () => {
+        $bookImageBack.style.display = "none";
+        $bookDetails.style.display = "flex";
       });
     });
   })
