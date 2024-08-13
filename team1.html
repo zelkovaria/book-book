@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>알라딘 API 요청 (Express 서버 사용)</title>
+  </head>
+  <body>
+    <h1>알라딘 API 요청 결과 (Express 서버 사용)</h1>
+    <p>결과는 아래에 표시됩니다.</p>
+    <div id="result"></div>
+
+    <script>
+      fetch("http://localhost:3000/api/search?query=aladdin")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("API 응답 데이터:", data.item);
+        })
+        .catch((error) => {
+          console.error("API 요청 중 오류 발생:", error);
+          document.getElementById("result").innerText =
+            "오류 발생: " + error.message;
+        });
+    </script>
+  </body>
+</html>

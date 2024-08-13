@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>알라딘 API 요청 (JSONP 사용)</title>
+  </head>
+  <body>
+    <h1>알라딘 API 요청 결과 (JSONP 사용)</h1>
+    <p>결과는 콘솔에 출력됩니다. 개발자 도구를 열어 확인해주세요.</p>
+
+    <div id="result"></div>
+    <script>
+      // const API_KEY = "키를 입력하세요";
+      const API_KEY = "ttbcarrepe1338001";
+      let apiUrl = `https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=${API_KEY}&Query=aladdin&QueryType=Title&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101`;
+      let proxyUrl = "https://api.allorigins.win/get?url=";
+      let encodedUrl = encodeURIComponent(apiUrl);
+      let fullUrl = proxyUrl + encodedUrl;
+
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            var data = JSON.parse(response.contents);
+            console.log("API 응답 데이터:", data.item);
+          } else {
+            console.error("API 요청 중 오류 발생:", xhr.status);
+            document.getElementById("result").innerText =
+              "오류 발생: " + xhr.status;
+          }
+        }
+      };
+      xhr.open("GET", fullUrl, true);
+      xhr.send();
+    </script>
+  </body>
+</html>
