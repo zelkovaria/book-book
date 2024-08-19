@@ -91,7 +91,7 @@ const createBookInfo = (bookInfo) => {
 
 const pagination = (totalItem) => {
   let html = "";
-  if (totalItem <= 8) return;
+  if (totalItem <= pageSize) return;
 
   let totalPage = Math.ceil(totalItem / pageSize);
   let pageGroup = Math.ceil(currentPage / groupSize);
@@ -124,18 +124,28 @@ const pagination = (totalItem) => {
   pageButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
       currentPage = Number(event.target.getAttribute("data-page"));
-      fetchBooks(currentPage);
+      fetchBooks(currentPage, query);
     });
   });
 };
 
+let query = "";
 const fetchBooks = (page, query) => {
   fetch(`http://localhost:3000/api/search?query=${query}&page=${page}`)
     .then((response) => response.json())
     .then((data) => {
       let totalItem = data.item.length;
+      const startIndex = (page - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const pageData = data.item.slice(startIndex, endIndex);
 
-      const bookHTML = data.item.map((book) => createBookInfo(book)).join("");
+      if (pageData.length === 0 && page > 1) {
+        currentPage -= 1;
+        fetchBooks(currentPage, query);
+        return;
+      }
+
+      const bookHTML = pageData.map((book) => createBookInfo(book)).join("");
       $bookCon.innerHTML = bookHTML;
 
       addFavoriteBtnEvent();
@@ -174,10 +184,10 @@ $searchInput.addEventListener("keypress", (e) => {
   }
 });
 
+// 즐겨찾기에 하트를 누르면 최대 20개까지 저장
 $heartBtn.addEventListener("click", () => {
   const favoriteBooks = JSON.parse(localStorage.getItem("favoriteBooks")) || [];
 
-  // 모달 내의 도서 목록 초기화
   $modalBooks.innerHTML = "";
 
   if (favoriteBooks.length === 0) {
@@ -226,4 +236,4 @@ window.addEventListener("click", (event) => {
   }
 });
 
-fetchBooks(1);
+fetchBooks(currentPage, query);

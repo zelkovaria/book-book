@@ -15,12 +15,17 @@ app.use(cors());
 app.get("/api/search", async (req, res) => {
   try {
     const { query, queryType, maxResults, start, searchTarget } = req.query;
+
+    if (!query) {
+      return res.json({ item: [] });
+    }
+
     const apiUrl = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx";
 
     const response = await axios.get(apiUrl, {
       params: {
         ttbkey: process.env.TTB_KEY,
-        Query: query || "aladdin",
+        Query: query,
         QueryType: queryType || "Title",
         MaxResults: maxResults || 10,
         start: start || 1,
