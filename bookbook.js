@@ -7,6 +7,7 @@ const $modalBooksList = document.querySelector("modal-books-list");
 const $closeBtn = document.querySelector(".close");
 const $modalBooks = document.querySelector(".modal-books");
 
+const maxLength = 25;
 let pageSize = 8;
 let page = 1;
 let totalResults = 0;
@@ -164,15 +165,18 @@ const fetchBooks = (page, query) => {
         const $bookImage = $bookItem.querySelector(".book-image");
         const $bookImageBack = $bookItem.querySelector(".book-image-back");
         const $bookDetails = $bookItem.querySelector(".book-details");
+        const $favoriteBtn = $bookItem.querySelector(".favorite");
 
         $bookImage.addEventListener("mouseover", () => {
           $bookImageBack.style.display = "block";
           $bookDetails.style.display = "none";
+          $favoriteBtn.style.visibility = "hidden";
         });
 
         $bookImage.addEventListener("mouseout", () => {
           $bookImageBack.style.display = "none";
           $bookDetails.style.display = "flex";
+          $favoriteBtn.style.visibility = "visible";
         });
       });
 
@@ -184,6 +188,13 @@ const fetchBooks = (page, query) => {
         "오류 발생: " + error.message;
     });
 };
+
+$searchInput.addEventListener("input", (e) => {
+  if ($searchInput.value.length > maxLength) {
+    $searchInput.value = $searchInput.value.slice(0, maxLength);
+    alert("검색어는 최대 25글자까지 입력 가능합니다.");
+  }
+});
 
 $searchInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
